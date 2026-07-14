@@ -1,0 +1,48 @@
+name: Release
+
+# 推送形如 v0.1.0 的 tag 时触发:构建 Windows 安装包并发布到 GitHub Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+# tauri-action 创建 Release、上传产物需要写权限
+permissions:
+  contents: write
+
+jobs:
+  release-windows:
+    name: Build & Release (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install frontend dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build & publish Tauri app
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # 用推送的 tag 名作为 Release tag(如 v0.1.0)
+          tagName: ${{ github.ref_name }}
+          releaseName: 'Process Monitor ${{ github.ref_name }}'
+          releaseBody: '下载下方的安装包(.msi / -setup.exe)进行安装。'
+          releaseDraft: false
+          prerelease: false
