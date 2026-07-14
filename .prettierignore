@@ -1,0 +1,10 @@
+dist/
+node_modules/
+coverage/
+src-tauri/target/
+package-lock.json
+*.lock
+.cursor/
+.claude/
+.serena/
+.spec-workflow/
