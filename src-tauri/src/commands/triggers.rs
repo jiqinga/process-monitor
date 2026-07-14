@@ -26,10 +26,6 @@ pub fn execute_all_actions(
 }
 
 #[tauri::command]
-pub fn cancel_action(
-    app: AppHandle,
-    state: State<'_, AppState>,
-    rule_id: String,
-) -> AppResult<()> {
+pub fn cancel_action(app: AppHandle, state: State<'_, AppState>, rule_id: String) -> AppResult<()> {
     state.engine.cancel_action_for_rule(&app, &rule_id)
 }

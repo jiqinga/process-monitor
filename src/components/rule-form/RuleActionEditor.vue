@@ -271,11 +271,7 @@
         :key="idx"
         class="flex items-center gap-2"
       >
-        <input
-          v-model="step.cmd"
-          :placeholder="$t('rules.cmdCommand')"
-          class="input-base flex-1"
-        />
+        <input v-model="step.cmd" :placeholder="$t('rules.cmdCommand')" class="input-base flex-1" />
         <div class="flex items-center gap-1">
           <input
             v-model.number="step.delayMs"

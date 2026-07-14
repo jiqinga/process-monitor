@@ -21,7 +21,9 @@ function makeProc(over: Partial<ProcessInfo>): ProcessInfo {
   };
 }
 
-function makeStatus(over: Partial<RuleStatus> & { rule_id: string; process_name: string }): RuleStatus {
+function makeStatus(
+  over: Partial<RuleStatus> & { rule_id: string; process_name: string },
+): RuleStatus {
   return {
     rule_id: over.rule_id,
     process_name: over.process_name,
@@ -65,28 +67,44 @@ describe('useProcessFilters', () => {
 
     it('matches name (case-insensitive)', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.searchQuery.value = 'CHROME';
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([1]);
     });
 
     it('matches display_name', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.searchQuery.value = 'firefox';
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([22]);
     });
 
     it('matches pid prefix as string', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.searchQuery.value = '33';
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([333]);
     });
 
     it('blank/whitespace search returns all', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.searchQuery.value = '   ';
       expect(f.filteredProcesses.value.length).toBe(3);
     });
@@ -101,7 +119,11 @@ describe('useProcessFilters', () => {
 
     it('cpu min/max are inclusive', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.filters.value.cpuMin = 50;
       f.filters.value.cpuMax = 95;
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([2, 3]);
@@ -109,7 +131,11 @@ describe('useProcessFilters', () => {
 
     it('memory min/max are inclusive', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.filters.value.memoryMin = 200;
       f.filters.value.memoryMax = 1000;
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([2]);
@@ -117,7 +143,11 @@ describe('useProcessFilters', () => {
 
     it('only one side bound applies if other is undefined', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.filters.value.cpuMin = 50;
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([2, 3]);
     });
@@ -131,7 +161,11 @@ describe('useProcessFilters', () => {
     ];
     const statuses: Record<string, RuleStatus> = {
       'monitored.exe': makeStatus({ rule_id: 'r1', process_name: 'monitored.exe' }),
-      'triggered.exe': makeStatus({ rule_id: 'r2', process_name: 'triggered.exe', is_triggered: true }),
+      'triggered.exe': makeStatus({
+        rule_id: 'r2',
+        process_name: 'triggered.exe',
+        is_triggered: true,
+      }),
     };
     const isMonitored = (p: ProcessInfo) => !!statuses[p.name];
     const getRuleStatus = (p: ProcessInfo) => statuses[p.name];
@@ -161,7 +195,11 @@ describe('useProcessFilters', () => {
   describe('hasActiveFilters', () => {
     it('is true when any range or status filter is set', () => {
       const processes = computed<ProcessInfo[]>(() => []);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       expect(f.hasActiveFilters.value).toBe(false);
       f.filters.value.cpuMin = 10;
       expect(f.hasActiveFilters.value).toBe(true);
@@ -169,7 +207,11 @@ describe('useProcessFilters', () => {
 
     it('clearFilters resets all to defaults', () => {
       const processes = computed<ProcessInfo[]>(() => []);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.filters.value.cpuMin = 10;
       f.filters.value.memoryMax = 500;
       f.filters.value.status = 'triggered';
@@ -190,7 +232,11 @@ describe('useProcessFilters', () => {
 
     it('sortBy(pid) ascending then descending', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.sortBy('pid');
       expect(f.filteredProcesses.value.map((p) => p.pid)).toEqual([1, 2, 3]);
       f.sortBy('pid');
@@ -199,21 +245,33 @@ describe('useProcessFilters', () => {
 
     it('sortBy(name) is case-insensitive', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.sortBy('name');
       expect(f.filteredProcesses.value.map((p) => p.name)).toEqual(['apple', 'banana', 'cherry']);
     });
 
     it('sortBy(cpu) sorts by cpu_usage', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.sortBy('cpu');
       expect(f.filteredProcesses.value.map((p) => p.cpu_usage)).toEqual([10, 30, 90]);
     });
 
     it('sortBy(memory) sorts by memory_mb', () => {
       const processes = computed(() => procs);
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.sortBy('memory');
       expect(f.filteredProcesses.value.map((p) => p.memory_mb)).toEqual([100, 200, 500]);
     });
@@ -258,7 +316,11 @@ describe('useProcessFilters', () => {
 
     it('paginated slice respects pageSize and currentPage', () => {
       const processes = computed(() => makeManyProcs(25));
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.pageSize.value = 10;
       expect(f.totalPages.value).toBe(3);
       expect(f.paginatedProcesses.value.length).toBe(10);
@@ -275,7 +337,11 @@ describe('useProcessFilters', () => {
 
     it('prevPage stops at 1, nextPage stops at totalPages', () => {
       const processes = computed(() => makeManyProcs(15));
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.pageSize.value = 10;
       expect(f.totalPages.value).toBe(2);
       f.prevPage();
@@ -288,7 +354,11 @@ describe('useProcessFilters', () => {
 
     it('visiblePages caps at 7', () => {
       const processes = computed(() => makeManyProcs(200));
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.pageSize.value = 10;
       expect(f.totalPages.value).toBe(20);
       f.goToPage(10);
@@ -316,8 +386,14 @@ describe('useProcessFilters', () => {
     });
 
     it('changing filters resets currentPage to 1', async () => {
-      const processes = computed(() => Array.from({ length: 50 }, (_, i) => makeProc({ pid: i + 1 })));
-      const f = useProcessFilters({ processes, isMonitored: () => false, getRuleStatus: () => undefined });
+      const processes = computed(() =>
+        Array.from({ length: 50 }, (_, i) => makeProc({ pid: i + 1 })),
+      );
+      const f = useProcessFilters({
+        processes,
+        isMonitored: () => false,
+        getRuleStatus: () => undefined,
+      });
       f.pageSize.value = 10;
       f.goToPage(3);
       f.filters.value.cpuMin = 5;

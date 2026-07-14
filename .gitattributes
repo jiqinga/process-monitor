@@ -1,0 +1,9 @@
+# 统一换行符:仓库内所有文本文件使用 LF,避免跨平台 CI 格式检查失败
+* text=auto eol=lf
+
+# 二进制文件不做换行符转换
+*.png binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

@@ -225,7 +225,10 @@ mod tests {
     fn build_control_command_windows_kill_uses_taskkill_force() {
         let (program, args) = build_control_command(ProcessControl::Kill, 1234);
         assert_eq!(program, "taskkill");
-        assert_eq!(args, vec!["/F".to_string(), "/PID".to_string(), "1234".to_string()]);
+        assert_eq!(
+            args,
+            vec!["/F".to_string(), "/PID".to_string(), "1234".to_string()]
+        );
     }
 
     #[cfg(target_os = "windows")]

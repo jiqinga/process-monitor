@@ -11,10 +11,7 @@ import { isRunCommand, isStartProcess, type Action, type Rule } from '@/types';
  * Kept as a composable (not a util) because the state is reactive and shared
  * with the template; pulling it out keeps the modal file focused on layout.
  */
-export function useActionFlags(
-  initialRule: Rule | null | undefined,
-  t: (key: string) => string,
-) {
+export function useActionFlags(initialRule: Rule | null | undefined, t: (key: string) => string) {
   const actionFlags = reactive({
     killProcess: false,
     startProcess: false,

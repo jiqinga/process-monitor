@@ -230,7 +230,11 @@ export function useTrendChart(deps: ChartDeps) {
     },
   );
 
-  watch(() => deps.referenceLine(), () => applyPriceLine(), { deep: true });
+  watch(
+    () => deps.referenceLine(),
+    () => applyPriceLine(),
+    { deep: true },
+  );
 
   onMounted(() => {
     initChart();
