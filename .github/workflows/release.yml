@@ -43,6 +43,21 @@ jobs:
           # 用推送的 tag 名作为 Release tag(如 v0.1.0)
           tagName: ${{ github.ref_name }}
           releaseName: 'Process Monitor ${{ github.ref_name }}'
-          releaseBody: '下载下方的安装包(.msi / -setup.exe)进行安装。'
+          # 由 GitHub Release Notes API 按 tag 区间自动生成变更列表(commit / PR / 贡献者)
+          generateReleaseNotes: true
+          # releaseBody 会被追加到自动生成的变更列表「上方」,作为安装指引
+          releaseBody: |
+            ## 📦 安装说明
+
+            下载下方对应的安装包:
+
+            - **`.exe`(-setup.exe)** — NSIS 安装程序,推荐大多数用户使用
+            - **`.msi`** — Windows Installer 包,适用于企业批量部署
+
+            > 若曾安装过旧版本,建议先卸载再安装,避免残留导致异常。
+
+            ---
+
+            ### 📝 更新内容
           releaseDraft: false
           prerelease: false
