@@ -30,7 +30,10 @@ fn check_pid_exists(pid: u32) -> bool {
     }
 }
 
+// Only invoked from the Windows-specific kill_process verification path;
+// kept for cross-platform parity but unused on non-Windows targets.
 #[cfg(not(target_os = "windows"))]
+#[allow(dead_code)]
 fn check_pid_exists(pid: u32) -> bool {
     match Command::new("kill").args(["-0", &pid.to_string()]).output() {
         Ok(output) => output.status.success(),
