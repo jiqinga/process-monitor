@@ -105,6 +105,24 @@ pub fn run() {
                 })
                 .build(app)?;
 
+            // 决定主窗口初始显隐：
+            // 仅当「本次由自启项拉起（命令行携带 --minimized）」且
+            // 「用户开启了 start_minimized」时，才保持隐藏、仅驻留托盘；
+            // 其余情况（手动启动 / 未开启静默）一律正常显示，避免闪窗或误藏。
+            let launched_minimized = std::env::args().any(|arg| arg == "--minimized");
+            let want_start_minimized = app
+                .try_state::<AppState>()
+                .and_then(|state| state.config.get_settings().ok())
+                .map(|settings| settings.start_minimized)
+                .unwrap_or(false);
+
+            if !(launched_minimized && want_start_minimized) {
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.show();
+                    let _ = window.set_focus();
+                }
+            }
+
             let handle = app.handle().clone();
             let engine_clone = engine.clone();
 

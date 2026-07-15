@@ -38,6 +38,7 @@ export interface AppSettings {
   dashboard_sort_order: 'asc' | 'desc';
   rules_page_size: number;
   logs_page_size: number;
+  start_minimized: boolean;
 }
 
 export interface NotificationPayload {

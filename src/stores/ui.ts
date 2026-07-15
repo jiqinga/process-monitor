@@ -18,6 +18,7 @@ export const useUIStore = defineStore('ui', () => {
     dashboard_sort_order: 'desc',
     rules_page_size: 20,
     logs_page_size: 20,
+    start_minimized: false,
   });
   const theme = ref<ThemeMode>('light');
   const actionPrompt = ref<ActionPromptPayload | null>(null);

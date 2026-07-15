@@ -29,6 +29,30 @@
         />
       </button>
     </div>
+
+    <div
+      class="flex items-center justify-between mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/60"
+      :class="{ 'opacity-50': !enabled }"
+    >
+      <div>
+        <label class="settings-label">{{ t('settings.startMinimizedEnabled') }}</label>
+        <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">
+          {{ t('settings.startMinimizedHint') }}
+        </p>
+      </div>
+      <button
+        type="button"
+        :disabled="!enabled"
+        class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
+        :class="startMinimized && enabled ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-600'"
+        @click="$emit('update:startMinimized', !startMinimized)"
+      >
+        <span
+          class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200"
+          :class="startMinimized ? 'translate-x-6' : 'translate-x-1'"
+        />
+      </button>
+    </div>
   </SettingsCard>
 </template>
 
@@ -36,8 +60,8 @@
   import { useI18n } from 'vue-i18n';
   import SettingsCard from './SettingsCard.vue';
 
-  defineProps<{ enabled: boolean }>();
-  defineEmits<{ (e: 'toggle'): void }>();
+  defineProps<{ enabled: boolean; startMinimized: boolean }>();
+  defineEmits<{ (e: 'toggle'): void; (e: 'update:startMinimized', value: boolean): void }>();
 
   const { t } = useI18n();
 </script>

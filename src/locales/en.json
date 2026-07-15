@@ -240,6 +240,8 @@
     "autostartDesc": "Configure app startup behavior",
     "autostartEnabled": "Launch on system startup",
     "autostartHint": "Automatically start the app when Windows starts",
+    "startMinimizedEnabled": "Start minimized",
+    "startMinimizedHint": "On autostart, keep the main window hidden and run in the tray only",
     "about": "About",
     "aboutDesc": "Third-party components and open-source credits",
     "creditsChart": "Charts powered by TradingView Lightweight Charts™"

@@ -251,6 +251,8 @@
     "autostartDesc": "配置应用启动行为",
     "autostartEnabled": "开机时自动启动",
     "autostartHint": "Windows 启动时自动运行此应用",
+    "startMinimizedEnabled": "最小化启动",
+    "startMinimizedHint": "开机自启时不显示主窗口，仅在系统托盘运行",
     "about": "关于",
     "aboutDesc": "第三方组件与开源致谢",
     "creditsChart": "图表组件由 TradingView Lightweight Charts™ 驱动"

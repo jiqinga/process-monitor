@@ -46,6 +46,7 @@ describe('Monitor Store', () => {
         dashboard_sort_order: 'desc',
         rules_page_size: 20,
         logs_page_size: 20,
+        start_minimized: false,
       });
     });
   });

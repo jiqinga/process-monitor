@@ -32,7 +32,11 @@
       </div>
     </div>
 
-    <SettingsAutostart :enabled="autostartEnabled" @toggle="handleToggleAutostart" />
+    <SettingsAutostart
+      :enabled="autostartEnabled"
+      v-model:start-minimized="localSettings.start_minimized"
+      @toggle="handleToggleAutostart"
+    />
 
     <SettingsTheme />
 
@@ -86,6 +90,7 @@
     logs_page_size: 20,
     dashboard_sort_field: 'cpu',
     dashboard_sort_order: 'desc',
+    start_minimized: false,
   });
 
   const autostartEnabled = ref(false);

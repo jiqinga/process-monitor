@@ -278,6 +278,10 @@ pub struct AppSettings {
     pub rules_page_size: u32,
     #[serde(default = "default_page_size")]
     pub logs_page_size: u32,
+    /// 开机自启时是否静默启动（不弹出主窗口，仅驻留托盘）。
+    /// 仅在应用由自启项拉起（携带 `--minimized` 参数）时生效。
+    #[serde(default)]
+    pub start_minimized: bool,
 }
 
 fn default_page_size() -> u32 {
@@ -301,6 +305,7 @@ impl Default for AppSettings {
             dashboard_sort_order: "desc".to_string(),
             rules_page_size: 20,
             logs_page_size: 20,
+            start_minimized: false,
         }
     }
 }

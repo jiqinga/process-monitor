@@ -47,6 +47,7 @@ describe('useUIStore', () => {
         dashboard_sort_order: 'desc',
         rules_page_size: 20,
         logs_page_size: 20,
+        start_minimized: false,
       });
     });
 
@@ -143,6 +144,7 @@ describe('useUIStore', () => {
         dashboard_sort_order: 'asc',
         rules_page_size: 50,
         logs_page_size: 50,
+        start_minimized: true,
       };
       vi.mocked(api.getSettings).mockResolvedValue(next);
 
